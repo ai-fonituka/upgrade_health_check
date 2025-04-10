@@ -1,0 +1,9 @@
+transformers>=4.51.1
+lxml
+torch
+streamlit
+pandas
+xhtml2pdf
+python-docx
+langchain
+langchain-ollama

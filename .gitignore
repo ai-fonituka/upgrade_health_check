@@ -1,0 +1,5 @@
+my_ai_environment
+app*.py
+custom .xml
+pagerduty*.xml
+teste*.py
