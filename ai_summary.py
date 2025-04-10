@@ -1,8 +1,14 @@
 from langchain_ollama import ChatOllama
 from langchain.schema import SystemMessage, HumanMessage
 import difflib
+import os
 
-llm = ChatOllama(model="mistral", temperature=0.2)
+USE_AI = os.getenv("USE_AI", "false").lower() == "true"
+
+if USE_AI:
+    from langchain_ollama import ChatOllama
+    from langchain.schema import SystemMessage, HumanMessage
+    llm = ChatOllama(model="mistral", temperature=0.2)
 
 def summarize_changes(name, diffs):
     prompt = (
@@ -19,5 +25,8 @@ def summarize_changes(name, diffs):
         SystemMessage(content="You are a ServiceNow expert. Focus on describing only the modified parts of each field, especially large code blocks."),
         HumanMessage(content=prompt)
     ]
+
+    if not USE_AI:
+        return "🧠 AI summary disabled in cloud environment."
     response = llm(messages)
     return response.content
